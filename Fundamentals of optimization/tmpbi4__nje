@@ -1,0 +1,41 @@
+import numpy as np
+import time
+def sort():
+    global index
+    index = list(range(N))
+    list1 = [min(A//a[j],C//c[j]) for j in range(N)]
+    ratio = [f[j]*list1[j] for j in range(N)]
+    index.sort(key=lambda i: ratio[i], reverse=True)
+    return index
+def Greedy_produce_planing(N,A,C,a,c,f,m):
+    global max_value
+    global fractions
+    fractions = dict()
+    for i in index:
+        fractions[i] = 0
+    for i in index:
+        if a[i] <= A and c[i] <=C :
+            if min(A//a[i],C//c[i]) >= m[i]:
+                fractions[i] = min(A//a[i],C//c[i])
+
+                max_value += f[i] * fractions[i]
+                C -= c[i]*fractions[i]
+                A -= a[i]*fractions[i]
+            
+        else :
+            break
+    return max_value,fractions
+N = 4
+A = 150
+C = 250
+c = [10,12,15,10]
+a = [4,2,7,5]
+f = [5,6,4,8]
+m = [10,12,6,25]
+Greedy_produce_planing(N, A, C, a, c, f, m)
+
+print('The maximum value of items that can be carried:', max_value)
+print('The fractions in which the items should be taken:', fractions)
+
+        
+            

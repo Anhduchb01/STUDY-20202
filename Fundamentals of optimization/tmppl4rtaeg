@@ -1,0 +1,38 @@
+import numpy as np
+N = 4
+
+c = [10,12,1,9]
+a = [4,2,7,5]
+f = [5,6,4,8]
+m = [10,12,6,4]
+
+def select(C,A,n,list_1):
+    n0 = [min(C//c[i],A//a[i]) for i in list_1]
+    n1 = [n[i]*f[i] for i in list_1]
+    n2 = np.argmax(n1)
+    
+    return n2
+def Greedy():
+    global A
+    global C
+    global g
+    A = 150
+    C = 250
+    solution = {}
+    list1 =[ i for i in range(N)]
+    n0 = [min(C//c[i],A//a[i]) for i in list1]
+    n3 = select(C,A,n0,list1)
+    if n0[n3] < m[n3]:
+            list1.pop(n3)
+            select(C,A,n0,list1)
+    else:  
+        solution[n3]= n0[3]
+        if c[n3]*n0[n3] < C and a[n3]*n0[n3] < A:
+            C = C - n3*c[n3]
+            A = A - n3*a[n3]
+            list1.pop(n3)
+            select(C,A,n0,list1)
+    return solution
+print(Greedy())
+
+
